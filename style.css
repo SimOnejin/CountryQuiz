@@ -89,5 +89,13 @@ button:hover {
 #next-button {
     /* display: none; 기본적으로 보이지 않게 설정 */
     visibility: hidden; /* 공간은 유지하지만 안 보이게 */
+    margin-top: 15px;
+    background-color: darkgray;
   }
   
+.countryList{
+    font: bold;
+}
+.capitalList{
+
+  }

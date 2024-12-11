@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentQuestionIndex = 0;
     const correctAnswers = [];
     const incorrectAnswers = [];
-    let totalQuestions = 10; // 기본값
-    let shuffledQuestions = []; // 랜덤으로 섞인 문제 리스트
+    let totalQuestions = 10;
+    let shuffledQuestions = [];
+    let correctAnswer = ""; // 현재 문제의 정답 저장
 
     const settingsContainer = document.getElementById('settings-container');
     const questionContainer = document.getElementById('question-container');
@@ -18,60 +19,52 @@ document.addEventListener("DOMContentLoaded", () => {
     const incorrectAnswersList = document.getElementById('incorrect-answers');
     const resultsContainer = document.getElementById('results');
 
-    // 문제 갯수 선택
     questionCountButtons.forEach(button => {
         button.addEventListener('click', () => {
             totalQuestions = parseInt(button.getAttribute('data-count'));
-            settingsContainer.style.display = 'none'; // 문제 설정 숨기기
-            questionContainer.style.display = 'block'; // 문제 컨테이너 보이기
+            settingsContainer.style.display = 'none';
+            questionContainer.style.display = 'block';
             startGame();
         });
     });
 
     function startGame() {
         currentQuestionIndex = 0;
-        correctAnswers.length = 0; // 배열 초기화
-        incorrectAnswers.length = 0; // 배열 초기화
+        correctAnswers.length = 0;
+        incorrectAnswers.length = 0;
         score = 0;
         updateScore();
-        fetchQuestions(); // 문제를 로드하고 섞기
+        fetchQuestions();
     }
 
     function updateScore() {
         scoreElement.textContent = `점수: ${score}`;
     }
 
-    // 데이터 로드 및 문제 섞기
     function fetchQuestions() {
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
-                shuffledQuestions = shuffle(data).slice(0, totalQuestions); // 랜덤으로 섞고 필요한 만큼만 선택
+                shuffledQuestions = shuffle(data).slice(0, totalQuestions);
                 loadNextQuestion();
             })
             .catch(error => console.error("데이터 로딩 오류:", error));
     }
 
     function loadNextQuestion() {
-        feedbackElement.textContent = ''; // 피드백 초기화
-        optionsContainer.innerHTML = ''; // 보기 초기화
+        feedbackElement.textContent = '';
+        optionsContainer.innerHTML = '';
 
         if (currentQuestionIndex < shuffledQuestions.length) {
             const question = shuffledQuestions[currentQuestionIndex];
             const countryName = question.country;
-            const correctAnswer = question.capital;
+            correctAnswer = question.capital; // 현재 정답 저장
 
-            // 틀린 답 선택
             const incorrectOptions = getRandomIncorrectAnswers(correctAnswer, shuffledQuestions);
+            const options = shuffle([correctAnswer, ...incorrectOptions]);
 
-            // 정답과 섞기
-            const options = [correctAnswer, ...incorrectOptions];
-            shuffle(options);
-
-            // 문제 표시
             countryNameElement.textContent = countryName;
 
-            // 보기 버튼 생성
             options.forEach(option => {
                 const button = document.createElement('button');
                 button.classList.add('option');
@@ -81,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 optionsContainer.appendChild(button);
             });
 
-            nextButton.style.visibility = 'hidden'; // 다음 버튼 숨기기
+            nextButton.style.visibility = 'hidden';
         } else {
             endGame();
         }
@@ -90,23 +83,24 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleAnswerClick(event) {
         const selectedAnswer = event.target;
         const isCorrect = selectedAnswer.dataset.answer === 'true';
+        nextButton.style.visibility = 'visible';
 
         if (isCorrect) {
             selectedAnswer.style.backgroundColor = 'green';
             feedbackElement.textContent = "정답!";
             score++;
-            correctAnswers.push(countryNameElement.textContent);
+            correctAnswers.push({ country: countryNameElement.textContent, capital: correctAnswer });
         } else {
             selectedAnswer.style.backgroundColor = 'red';
             feedbackElement.textContent = "틀렸습니다.";
-            incorrectAnswers.push(countryNameElement.textContent);
+
+            const correctButton = [...optionsContainer.children].find(button => button.dataset.answer === 'true');
+            if (correctButton) correctButton.style.backgroundColor = 'green';
+
+            incorrectAnswers.push({ country: countryNameElement.textContent, capital: correctAnswer });
         }
 
-        // 보기 버튼 비활성화
         document.querySelectorAll('.option').forEach(btn => btn.disabled = true);
-
-        // 다음 버튼 보이기
-        nextButton.style.visibility = 'visible';
         updateScore();
     }
 
@@ -118,24 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function endGame() {
         questionContainer.style.display = 'none';
         resultsContainer.style.display = 'block';
-        correctAnswersList.innerHTML = correctAnswers.map(ans => `<li>${ans}</li>`).join('');
-        incorrectAnswersList.innerHTML = incorrectAnswers.map(ans => `<li>${ans}</li>`).join('');
+        correctAnswersList.innerHTML = correctAnswers.map(ans => `<li><span class="countryList">${ans.country}</span> - <span class="capitalList">${ans.capital}</span></li>`).join('');
+        incorrectAnswersList.innerHTML = incorrectAnswers.map(ans => `<li><span class="countryList">${ans.country}</span> - <span class="capitalList">${ans.capital}</span></li>`).join('');
     }
 
-    // 틀린 답 랜덤 선택
     function getRandomIncorrectAnswers(correctAnswer, allQuestions) {
-        const incorrectOptions = [];
-        while (incorrectOptions.length < 3) {
-            const randomIndex = Math.floor(Math.random() * allQuestions.length);
-            const randomQuestion = allQuestions[randomIndex];
-            if (!incorrectOptions.includes(randomQuestion.capital) && randomQuestion.capital !== correctAnswer) {
-                incorrectOptions.push(randomQuestion.capital);
-            }
-        }
-        return incorrectOptions;
+        const capitals = allQuestions.map(q => q.capital).filter(capital => capital !== correctAnswer);
+        return shuffle(capitals).slice(0, 3);
     }
 
-    // 배열 랜덤 섞기
     function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
