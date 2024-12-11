@@ -96,6 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function handleAnswerClick(event) {
         const selectedAnswer = event.target;
         const isCorrect = selectedAnswer.dataset.answer === 'true';
+        const question = shuffledQuestions[currentQuestionIndex];
+        const correctAnswer = question.capital;
         // 다음 버튼 보이기
         nextButton.style.visibility = 'visible';
 
@@ -103,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedAnswer.style.backgroundColor = 'green';
             feedbackElement.textContent = "정답!";
             score++;
-            correctAnswers.push({ country: countryNameElement.textContent, capital: selectedAnswer.textContent });
+            correctAnswers.push({ country: question.country, capital: correctAnswer });
         } else {
             selectedAnswer.style.backgroundColor = 'red';
             feedbackElement.textContent = "틀렸습니다.";
@@ -116,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 correctButton.style.backgroundColor = 'green';
             }
 
-            incorrectAnswers.push({ country: countryNameElement.textContent, capital: selectedAnswer.textContent });
+            incorrectAnswers.push({ country: question.country, capital: correctAnswer });
         }
 
         // 보기 버튼 비활성화
