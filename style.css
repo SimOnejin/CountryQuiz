@@ -28,7 +28,7 @@ body {
     position: absolute;
     justify-content: center;
     z-index: 999;
-    padding: 130px 80px;
+    padding: 140px 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -93,8 +93,12 @@ button:hover {
     background-color: darkgray;
   }
   
+#replay-button{
+    background-color: darkgray;
+}
+
 .countryList{
-    font: bold;
+    font-weight: bold;
 }
 .capitalList{
 

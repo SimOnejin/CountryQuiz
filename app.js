@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionContainer = document.getElementById('question-container');
     const questionCountButtons = document.querySelectorAll('.question-count');
     const nextButton = document.getElementById('next-button');
+    const replayButton = document.getElementById('replay-button');
     const countryNameElement = document.getElementById('country-name');
     const optionsContainer = document.getElementById('options-container');
     const feedbackElement = document.getElementById('feedback');
@@ -131,15 +132,18 @@ document.addEventListener("DOMContentLoaded", () => {
         currentQuestionIndex++;
         loadNextQuestion();
     });
+    replayButton.addEventListener('click', () => {
+        location.reload();
+    });
 
     function endGame() {
         questionContainer.style.display = 'none';
         resultsContainer.style.display = 'block';
         correctAnswersList.innerHTML = correctAnswers.length > 0 
-            ? correctAnswers.map(ans => `<li>${ans.country} - ${ans.capital}</li>`).join('')
+            ? correctAnswers.map(ans => `<li><span class="countryList">${ans.country}</span> : <span class="capitalList">${ans.capital}</span></li>`).join('')
             : '<li>없음</li>';
         incorrectAnswersList.innerHTML = incorrectAnswers.length > 0
-            ? incorrectAnswers.map(ans => `<li>${ans.country} - ${ans.capital}</li>`).join('')
+            ? incorrectAnswers.map(ans => `<li><span class="countryList">${ans.country}</span> : <span class="capitalList">${ans.capital}</span></li>`).join('')
             : '<li>없음</li>';
     }
 
