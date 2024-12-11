@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#game-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    min-height: 500px;
+    /* display: none; */
+}
+
+#question-container {
+    margin-bottom: 20px;
+}
+
+#settings-container{
+    background-color: white;
+    position: absolute;
+    justify-content: center;
+    z-index: 999;
+    padding: 130px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.question-count{
+}
+
+button {
+    padding: 10px;
+    width: 80%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.option {
+    background-color: #008CBA;
+}
+
+.option.correct {
+    background-color: #4CAF50;
+}
+
+.option.incorrect {
+    background-color: #f44336;
+}
+
+#feedback {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#score {
+    margin-top: 20px;
+}
+
+#results {
+    margin-top: 30px;
+}
+
+#results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#results li {
+    margin-bottom: 10px;
+}
+#next-button {
+    /* display: none; 기본적으로 보이지 않게 설정 */
+    visibility: hidden; /* 공간은 유지하지만 안 보이게 */
+  }
+  

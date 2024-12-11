@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수도 맞추기 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="settings-container">
+        <p>문제 갯수를 선택하세요:</p>
+        <button class="question-count" data-count="10">10개</button>
+        <button class="question-count" data-count="20">20개</button>
+        <button class="question-count" data-count="30">30개</button>
+    </div>
+    <div id="game-container">
+        <h1>수도 맞추기 게임</h1>
+        <div id="question-container">
+            <p id="country-name">국가 이름</p>
+            <div id="options-container">
+                <button class="option" data-answer="1">보기 1</button>
+                <button class="option" data-answer="2">보기 2</button>
+                <button class="option" data-answer="3">보기 3</button>
+                <button class="option" data-answer="4">보기 4</button>
+            </div>
+            <button id="next-button" style="visibility: hidden;">다음 문제</button>
+        </div>
+        <p id="feedback"></p>
+        <p id="score">점수: 0</p>
+        <div id="results" style="display: none;">
+            <h2>결과</h2>
+            <p>맞힌 문제:</p>
+            <ul id="correct-answers"></ul>
+            <p>틀린 문제:</p>
+            <ul id="incorrect-answers"></ul>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
