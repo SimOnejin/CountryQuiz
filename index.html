@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수도 맞추기 게임</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
     <div id="settings-container">
         <p>문제 갯수를 선택하세요:</p>
-        <button class="question-count" data-count="10">10개</button>
-        <button class="question-count" data-count="20">20개</button>
-        <button class="question-count" data-count="30">30개</button>
+        <button class="question-count btn btn-success" data-count="10">10개</button>
+        <button class="question-count btn btn-success" data-count="20">20개</button>
+        <button class="question-count btn btn-success" data-count="30">30개</button>
     </div>
     <div id="game-container">
-        <h1>수도 맞추기 게임</h1>
+        <h1 style="font-weight: bold;">수도 맞추기 게임</h1>
         <p id="questions"> 문제: <span id="qCount">1</span>/<span id="qTotal">0</span></p>
         <div id="question-container">
             <p id="country-name">국가 이름</p>
@@ -47,9 +51,37 @@
                     <td><ul id="incorrect-answers" style="text-align: left;"></ul></td>
                 </tr>
             </table>
+
+
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" style="margin-bottom: 5px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                출제 빈도수
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">출제 빈도수</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="frequency-list"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modalBtn" id="frequency-reset">초기화</button>
+                        <button type="button" class="btn btn-secondary modalBtn" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
             <button id="replay-button">다시하기</button>
         </div>
     </div>
-    <script src="app.js"></script>
+    <script src="app.js" type="module"></script>
 </body>
 </html>

@@ -76,7 +76,9 @@ button:hover {
 }
 
 .option {
-    background-color: #008CBA;
+    background-color: #008CBA !important;
+    border-radius: 4px;
+    margin: 5px 0;
     font-size: medium;
 }
 
@@ -128,6 +130,7 @@ button:hover {
     visibility: hidden; /* 공간은 유지하지만 안 보이게 */
     margin-top: 15px;
     background-color: darkgray;
+    border-radius: 4px;
   }
   
 #replay-button{
@@ -137,6 +140,20 @@ button:hover {
 .countryList{
     font-weight: bold;
 }
-.capitalList{
 
+
+.question-count{
+    width: 100%;
+    margin: 3px;
+    background-color: #4CAF50 !important;
+}
+
+  div#frequency-list{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modalBtn{
+    width: 110px;
   }

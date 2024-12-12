@@ -1,3 +1,5 @@
+import { QuestionFrequencyTracker } from './frequencyTracker.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     let score = 0;
     let currentQuestionIndex = 0;
@@ -18,10 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const correctAnswersList = document.getElementById('correct-answers');
     const incorrectAnswersList = document.getElementById('incorrect-answers');
     const resultsContainer = document.getElementById('results');
+    const frequencyList = document.getElementById('frequency-list');
     const qCount = document.getElementById('qCount');
     const qTotal = document.getElementById('qTotal');
     const questions = document.getElementById('questions');
+    const frequencyReset = document.getElementById('frequency-reset');
     
+    QuestionFrequencyTracker.loadFrequency();
 
     // 문제 갯수 선택
     questionCountButtons.forEach(button => {
@@ -73,6 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const question = shuffledQuestions[currentQuestionIndex];
             const countryName = question.country;
             const correctAnswer = question.capital;
+
+            QuestionFrequencyTracker.updateFrequency(countryName); // 빈도수 업데이트
 
             // 틀린 답 선택
             const incorrectOptions = getRandomIncorrectAnswers(correctAnswer, shuffledQuestions);
@@ -155,7 +162,40 @@ document.addEventListener("DOMContentLoaded", () => {
         incorrectAnswersList.innerHTML = incorrectAnswers.length > 0
             ? incorrectAnswers.map(ans => `<li><span class="countryList">${ans.country}</span> : <span class="capitalList">${ans.capital}</span></li>`).join('')
             : '<li>없음</li>';
+        displayFrequency();
     }
+
+    function displayFrequency() {
+        frequencyList.innerHTML = '';
+        
+        // 전체 데이터 로드 (0회 포함하기 위해 data.json 사용)
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // 모든 국가를 순회하며 빈도수를 확인
+                const frequencyData = data.map(item => {
+                    const count = QuestionFrequencyTracker.frequency[item.country] || 0; // 출제 횟수 가져오기
+                    return { country: item.country, count };
+                });
+    
+                // 빈도수 정렬 (출제 횟수 내림차순)
+                frequencyData.sort((a, b) => b.count - a.count);
+    
+                // 빈도수 출력
+                frequencyData.forEach(({ country, count }) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${country}: ${count}회`;
+                    frequencyList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('빈도수를 로드하는 중 오류:', error));
+    }
+
+    frequencyReset.addEventListener('click', () => {
+        QuestionFrequencyTracker.resetFrequency();
+        displayFrequency()
+    });
+    
 
     // 틀린 답 랜덤 선택
     function getRandomIncorrectAnswers(correctAnswer, allQuestions) {
