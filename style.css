@@ -31,6 +31,7 @@ body {
     #country-name{
         font-size: larger;
         font-weight: bold;
+        margin-bottom: 26px;
     }
 }
 
@@ -50,7 +51,7 @@ body {
     font-size: small;
     position: relative;
     left: 35%;
-    top: 17px;
+    top: 35px;
     height: 0;
     margin: 0;
 }
@@ -97,7 +98,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 0px;
+    margin-top: 6px;
     /* bottom: 12rem; */
     /* margin-top: 15px; */
     align-self: center;
