@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const correctAnswersList = document.getElementById('correct-answers');
     const incorrectAnswersList = document.getElementById('incorrect-answers');
     const resultsContainer = document.getElementById('results');
+    const qCount = document.getElementById('qCount');
+    const qTotal = document.getElementById('qTotal');
+    const questions = document.getElementById('questions');
+    
 
     // 문제 갯수 선택
     questionCountButtons.forEach(button => {
@@ -25,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
             totalQuestions = parseInt(button.getAttribute('data-count'));
             settingsContainer.style.display = 'none'; // 문제 설정 숨기기
             questionContainer.style.display = 'block'; // 문제 컨테이너 보이기
+            qTotal.textContent = `${totalQuestions}`;
+
             startGame();
         });
     });
@@ -130,6 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nextButton.addEventListener('click', () => {
         currentQuestionIndex++;
+        
+        qCount.textContent = `${currentQuestionIndex+1}`;
+
         loadNextQuestion();
     });
     replayButton.addEventListener('click', () => {
@@ -138,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function endGame() {
         questionContainer.style.display = 'none';
+        questions.style.display = 'none';
         resultsContainer.style.display = 'block';
         correctAnswersList.innerHTML = correctAnswers.length > 0 
             ? correctAnswers.map(ans => `<li><span class="countryList">${ans.country}</span> : <span class="capitalList">${ans.capital}</span></li>`).join('')

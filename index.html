@@ -15,6 +15,7 @@
     </div>
     <div id="game-container">
         <h1>수도 맞추기 게임</h1>
+        <p id="questions"> 문제: <span id="qCount">1</span>/<span id="qTotal">0</span></p>
         <div id="question-container">
             <p id="country-name">국가 이름</p>
             <div id="options-container">
@@ -25,17 +26,24 @@
             </div>
             <button id="next-button" style="visibility: hidden;">다음 문제</button>
         </div>
-        <p id="feedback"></p>
-        <p id="score">점수: 0</p>
+        <div id="feedback-container">
+            <p id="score">점수: 0</p> 
+            <p id="feedback"></p>
+        </div>
         <div id="results" style="display: none;">
             <h2>결과</h2>
-            <table>
+            <table style="width: 100%;">
                 <tr>
-                    <td><p>맞힌 문제:</p></td>
-                    <td><p>틀린 문제:</p></td>
+                    <td style="font-weight: bold;"><p>맞힌 문제:</p></td>
                 </tr>
                 <tr>
                     <td><ul id="correct-answers" style="text-align: left;"></ul></td>
+                </tr>
+                <td><hr></td>
+                <tr>
+                    <td style="font-weight: bold;"><p>틀린 문제:</p></td>
+                </tr>
+                <tr>
                     <td><ul id="incorrect-answers" style="text-align: left;"></ul></td>
                 </tr>
             </table>
