@@ -76,7 +76,7 @@ button:hover {
 }
 
 .option {
-    background-color: #008CBA !important;
+    background-color: #008CBA;
     border-radius: 4px;
     margin: 5px 0;
     font-size: medium;
